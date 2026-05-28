@@ -162,7 +162,7 @@ function DashboardPage() {
       </main>
 
       <Dialog open={wizardOpen} onOpenChange={setWizardOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="w-[95vw] max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader><DialogTitle className="font-serif text-2xl">{t("book_new")}</DialogTitle></DialogHeader>
           <BookingWizard onDone={() => setWizardOpen(false)} />
         </DialogContent>

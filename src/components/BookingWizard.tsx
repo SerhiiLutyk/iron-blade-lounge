@@ -73,7 +73,7 @@ export function BookingWizard({ onDone }: { onDone: () => void }) {
   ];
 
   return (
-    <div>
+    <div className="min-w-0">
       <div className="flex items-center justify-between mb-6">
         {steps.map((s, i) => (
           <div key={s.n} className="flex items-center flex-1">
@@ -126,10 +126,10 @@ export function BookingWizard({ onDone }: { onDone: () => void }) {
             <div className="space-y-6">
               <div>
                 <Label>Date</Label>
-                <div className="flex gap-2 overflow-x-auto pb-2 mt-2">
+                <div className="flex gap-2 overflow-x-auto pb-2 mt-2 -mx-1 px-1">
                   {dateOptions.map((d) => (
                     <button key={d} onClick={() => { setDate(d); setTime(null); }}
-                      className={cn("px-3 py-2 rounded border min-w-[72px] text-center transition-all",
+                      className={cn("px-3 py-2 rounded border min-w-[64px] shrink-0 text-center transition-all",
                         date === d ? "border-gold bg-gold/10 text-gold" : "border-border hover:border-gold/50")}>
                       <div className="text-xs uppercase">{format(parseISO(d), "EEE")}</div>
                       <div className="font-serif text-lg">{format(parseISO(d), "d")}</div>
@@ -139,7 +139,7 @@ export function BookingWizard({ onDone }: { onDone: () => void }) {
               </div>
               <div>
                 <Label>Time</Label>
-                <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 mt-2">
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 mt-2">
                   {SLOTS.map((s) => {
                     const taken = booked.includes(s);
                     return (
