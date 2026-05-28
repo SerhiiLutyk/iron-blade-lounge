@@ -53,7 +53,7 @@ function AdminPage() {
       .gte("appointment_date", format(new Date(Date.now() - 7 * 86400000), "yyyy-MM-dd"))).data ?? [],
   });
 
-  const updateStatus = async (id: string, status: string) => {
+  const updateStatus = async (id: string, status: typeof STATUSES[number]) => {
     const { error } = await supabase.from("bookings").update({ status }).eq("id", id);
     if (error) toast.error(error.message);
     else { toast.success("Updated"); qc.invalidateQueries({ queryKey: ["todays"] }); qc.invalidateQueries({ queryKey: ["recent-bookings"] }); }
