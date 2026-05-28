@@ -138,7 +138,7 @@ function AdminPage() {
                     <div className="font-serif text-lg">{b.appointment_time?.slice(0,5)} · {b.profiles?.full_name ?? "Guest"}</div>
                     <div className="text-sm text-muted-foreground">{b.services?.name} with {b.barbers?.name}</div>
                   </div>
-                  <Select defaultValue={b.status} onValueChange={(v) => updateStatus(b.id, v)}>
+                  <Select defaultValue={b.status} onValueChange={(v) => updateStatus(b.id, v as typeof STATUSES[number])}>
                     <SelectTrigger className="w-[160px]"><SelectValue /></SelectTrigger>
                     <SelectContent>
                       {STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
