@@ -14,16 +14,199 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      barbers: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          id: string
+          instagram_handle: string | null
+          name: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          id?: string
+          instagram_handle?: string | null
+          name: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          id?: string
+          instagram_handle?: string | null
+          name?: string
+        }
+        Relationships: []
+      }
+      bookings: {
+        Row: {
+          appointment_date: string
+          appointment_time: string
+          barber_id: string
+          created_at: string
+          id: string
+          service_id: string
+          status: Database["public"]["Enums"]["booking_status"]
+          user_id: string
+        }
+        Insert: {
+          appointment_date: string
+          appointment_time: string
+          barber_id: string
+          created_at?: string
+          id?: string
+          service_id: string
+          status?: Database["public"]["Enums"]["booking_status"]
+          user_id: string
+        }
+        Update: {
+          appointment_date?: string
+          appointment_time?: string
+          barber_id?: string
+          created_at?: string
+          id?: string
+          service_id?: string
+          status?: Database["public"]["Enums"]["booking_status"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_barber_id_fkey"
+            columns: ["barber_id"]
+            isOneToOne: false
+            referencedRelation: "barbers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gallery: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          title: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          title?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          title?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string | null
+          id: string
+          loyalty_points: number
+          phone_number: string | null
+        }
+        Insert: {
+          created_at?: string
+          full_name?: string | null
+          id: string
+          loyalty_points?: number
+          phone_number?: string | null
+        }
+        Update: {
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          loyalty_points?: number
+          phone_number?: string | null
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          category: Database["public"]["Enums"]["service_category"]
+          created_at: string
+          duration_minutes: number
+          id: string
+          name: string
+          price: number
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["service_category"]
+          created_at?: string
+          duration_minutes: number
+          id?: string
+          name: string
+          price: number
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["service_category"]
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          name?: string
+          price?: number
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_booked_slots: {
+        Args: { _barber_id: string; _date: string }
+        Returns: {
+          appointment_time: string
+        }[]
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "user" | "admin"
+      booking_status:
+        | "Pending"
+        | "Confirmed"
+        | "Completed"
+        | "Cancelled"
+        | "No-Show"
+      service_category: "Hair" | "Beard" | "Combo"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +333,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["user", "admin"],
+      booking_status: [
+        "Pending",
+        "Confirmed",
+        "Completed",
+        "Cancelled",
+        "No-Show",
+      ],
+      service_category: ["Hair", "Beard", "Combo"],
+    },
   },
 } as const
